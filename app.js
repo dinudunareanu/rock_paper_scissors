@@ -1,3 +1,8 @@
+const rock = document.querySelector('#rock');
+const paper = document.querySelector('#paper');
+const scissors = document.querySelector('#scissors');
+const restartBtn = document.querySelector('#restart');
+
 function getComputerChoice() {
     let rand = Math.floor(Math.random() * 3);
 
@@ -13,75 +18,94 @@ function getComputerChoice() {
     }
 }
 
-function playRound(playerSelection, computerSelection) {
-    let winner = 0;
+function gameEnd(winner) {
+    const msg = document.querySelector('.msg');
 
+    if (winner === 1) {
+        msg.textContent = "Congratulations! You won!";
+    }
+    else {
+        msg.textContent = "Sorry, you lost!";
+    }
+
+    restartBtn.classList.toggle("noDisplay");
+    rock.classList.toggle("disable");
+    paper.classList.toggle("disable");
+    scissors.classList.toggle("disable");
+}
+
+function restart() {
+    document.querySelector('.playerScore').textContent = "0";
+    document.querySelector('.computerScore').textContent = "0";
+    document.querySelector('.msg').textContent = "";
+    restartBtn.classList.toggle("noDisplay");
+    rock.classList.toggle("disable");
+    paper.classList.toggle("disable");
+    scissors.classList.toggle("disable");
+}
+
+
+rock.addEventListener('click', playRound);
+paper.addEventListener('click', playRound);
+scissors.addEventListener('click', playRound);
+restartBtn.addEventListener('click', restart);
+
+function playRound(e) {
+    let playerSelection = e.target.id;
+    let computerSelection = getComputerChoice();
+
+    let winner = 0;
+    let message = "";
     if (playerSelection === computerSelection) {
-        console.log("Draw!");
-        winner = -1;
+        message = "Draw!";
     }
     else {
         if (playerSelection === "rock") {
             if (computerSelection === "paper") {
-                console.log("Paper beats rock! You lost!");
+                message = "Paper beats rock! You lost!";
+                winner = -1;
             }
             else {
-                console.log("Rock beats scissors! You won!");
+                message = "Rock beats scissors! You won!";
                 winner = 1;
             }
         } else if (playerSelection === "paper") {
             if (computerSelection === "rock") {
-                console.log("Paper beats rock! You won!");
+                message = "Paper beats rock! You won!";
                 winner = 1;
             }
             else {
-                console.log("Scissors beats paper! You lost!");
+                message = "Scissors beats paper! You lost!";
+                winner = -1;
             }
         } else {
             if (computerSelection === "rock") {
-                console.log("Rock beats scissors! You lost!");
+                message = "Rock beats scissors! You lost!";
+                winner = -1;
             }
             else {
-                console.log("Scissors beats paper! You won!");
+                message = "Scissors beats paper! You won!";
                 winner = 1;
             }
         }
     }
-    return winner;
-}
 
-function game() {
-    let playerScore = 0;
-    let computerScore = 0;
+    document.querySelector('.msg').textContent = message;
 
-    let i = 0;
-    while (i < 5 && playerScore < 3 && computerScore < 3) {
-        let f = 0;
-        while (!f) {
-            playerSelection = prompt("Rock, paper, or scissors?").toLowerCase();
-            if (playerSelection === "rock" || playerSelection === "paper" || playerSelection === "scissors") {
-                f = 1;
-            }
-            else {
-                alert("Invalid input!");
-            }
+    let scoreToIncrement = 0;
+    if (winner === 1) {
+        scoreToIncrement = document.querySelector('.playerScore');
+        scoreToIncrement.textContent++;
+
+        if (scoreToIncrement.textContent === '5') {
+            gameEnd(1);
         }
-        computerSelection = getComputerChoice();
+    } else if (winner === -1) {
+        scoreToIncrement = document.querySelector('.computerScore');
+        scoreToIncrement.textContent++;
 
-        let x = playRound(playerSelection, computerSelection);
-        if (x !== -1) 
-            x ? playerScore++ : computerScore++;
-        console.log(`Score: ${playerScore} - ${computerScore}`);
-
-        i++;
-    }
-
-    if (playerScore > computerScore) {
-        console.log("Congratulation! You won!");
-    }
-    else if (computerScore > playerScore){
-        console.log("Sorry, you lost!");
-    } else {
-        console.log("It's a draw!");
+        if (scoreToIncrement.textContent === '5') {
+            gameEnd(-1);
+        }
     }
 }

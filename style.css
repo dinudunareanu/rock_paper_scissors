@@ -1,0 +1,94 @@
+@import url('https://fonts.googleapis.com/css2?family=Raleway:wght@400;500;700;800&display=swap');
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: 'Raleway', sans-serif;
+}
+
+body {
+    background-color: beige;
+    height: 100vh;
+
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+}
+
+.title {
+    font-size: 50px;
+    border-bottom: 10px solid black;
+}
+
+.score {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px;
+
+    font-size: 100px;
+    padding: 25px 50px;
+}
+
+.buttons {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 100px;
+}
+
+#rock, #paper, #scissors {
+    background-color: beige;
+    color: black;
+    font-size: 50px;
+    font-weight: 700;
+    padding: 30px 60px;
+    border: 7px solid black;
+    cursor: pointer;
+}
+
+#rock:hover, #paper:hover, #scissors:hover {
+    transition: 0.2s ease;
+    transform: scale(1.15);
+
+    color: beige;
+    background-color: black;
+}
+
+.messages {
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    height: 70px;
+
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 20px;
+
+    font-size: 20px;
+}
+
+#restart {
+    background-color: beige;
+    border: none;
+    color: black;
+    font-size: 20px;
+    font-weight: 700;
+}
+
+#restart:hover {
+    transition: 0.1s ease-in-out;
+    border-bottom: 4px solid black;
+    cursor: pointer;
+}
+
+.noDisplay {
+    display: none;
+}
+
+.disable {
+    pointer-events: none;
+}
